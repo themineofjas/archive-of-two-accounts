@@ -3,151 +3,370 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#152334">
-  <title>The Archive of Two Accounts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#142432">
+
+  <title>The Archive of Two Accounts — Investigation</title>
+
   <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
+
 <body>
 
 <header class="top">
-  <div class="brand">
-    <span class="seal">A</span>
-    <div>
-      <strong>THE ARCHIVE</strong>
-      <small>CASE FILE 001 · FICTIONAL</small>
-    </div>
+  <div>
+    <strong>THE ARCHIVE</strong>
+    <span>BRIAR GLEN · CASE 001</span>
   </div>
-  <button id="reset" class="subtle">Restart investigation</button>
+
+  <div class="head-actions">
+    <span id="progress" aria-live="polite">
+      0 / 6 records
+    </span>
+    <button id="reset" class="quiet">Restart</button>
+  </div>
 </header>
 
-<main>
-  <section class="hero">
-    <p class="eyebrow">INTERACTIVE INVESTIGATION · 10–15 MINUTES</p>
-    <h1>The Archive of<br><em>Two Accounts</em></h1>
-    <p>
-      Twenty years ago, the Briar Glen Public Library closed.
-      The newspaper blamed a budget shortfall. Former staff
-      members remember a different story. Examine six surviving
-      records, trace their connections, and decide what the
-      evidence supports.
-    </p>
-    <div class="hero-actions">
-      <a href="#archive" class="primary">Open the evidence archive ↓</a>
-      <span id="progress">0 of 6 records examined</span>
-    </div>
-  </section>
+<section class="intro">
+  <div class="eyebrow">AN INTERACTIVE INVESTIGATION</div>
 
-  <section id="archive" class="workspace">
-    <div class="section-head">
+  <h1>The Archive of <em>Two Accounts</em></h1>
+
+  <p>
+    In 2006, Briar Glen's public library closed.
+    The city cited a budget shortfall. Other records
+    suggest a more complicated decision.
+
+    Investigate the archive, connect evidence,
+    interview witnesses, and deliver a defensible
+    conclusion.
+  </p>
+
+  <a class="button" href="#desk">
+    Open the investigator's desk
+  </a>
+</section>
+
+<main id="desk" class="desk">
+
+  <!-- GAME NAVIGATION -->
+
+  <nav class="tabs" aria-label="Investigation sections">
+    <button data-tab="archive" class="active">Archive</button>
+    <button data-tab="compare">Compare</button>
+    <button data-tab="board">Evidence board</button>
+    <button data-tab="timeline">Timeline</button>
+    <button data-tab="interviews">Interviews</button>
+    <button data-tab="deductions">Deductions</button>
+    <button data-tab="report">Report</button>
+  </nav>
+
+  <!-- SECTION 1: EVIDENCE ARCHIVE -->
+
+  <section class="panel active" id="panel-archive">
+
+    <div class="panel-head">
       <div>
-        <p class="eyebrow">THE COLLECTION</p>
+        <div class="eyebrow">SOURCE COLLECTION</div>
         <h2>Evidence archive</h2>
+
         <p>
-          Choose records in any order. Click
-          <b>Examine record</b> to open the full document.
+          Search records, inspect documents, and tap
+          a passage to collect it as evidence.
+          New records may become available as you investigate.
         </p>
       </div>
-      <label class="search-wrap">
-        Search archive
-        <input id="search" type="search"
-          placeholder="Search titles, names, text…">
+
+      <label>
+        Search records
+        <input
+          id="search"
+          type="search"
+          placeholder="Try redevelopment, parcel, or funding"
+        >
       </label>
     </div>
-    <div id="cards" class="cards"></div>
+
+    <div id="record-grid" class="record-grid"></div>
+
   </section>
 
-  <section class="workspace connections">
-    <div class="section-head">
+  <!-- SECTION 2: DOCUMENT COMPARISON -->
+
+  <section class="panel" id="panel-compare">
+
+    <div class="panel-head">
       <div>
-        <p class="eyebrow">DETECTIVE'S NOTEBOOK</p>
-        <h2>Connect the evidence</h2>
+        <div class="eyebrow">SOURCE CRITICISM</div>
+        <h2>Compare records</h2>
+
         <p>
-          Open two related records, then review how they connect.
-          The links below unlock as you read.
+          Place two records side by side and examine
+          differences in their claims.
         </p>
       </div>
     </div>
-    <div id="links" class="links"></div>
+
+    <div class="compare-controls">
+      <label>
+        Left record
+        <select id="compare-left"></select>
+      </label>
+
+      <label>
+        Right record
+        <select id="compare-right"></select>
+      </label>
+    </div>
+
+    <div class="compare-grid">
+      <article id="compare-a" class="paper"></article>
+      <article id="compare-b" class="paper"></article>
+    </div>
+
   </section>
 
-  <section class="workspace conclusion">
-    <p class="eyebrow">YOUR FINDINGS</p>
-    <h2>Write your conclusion</h2>
-    <p>
-      What best explains the closure? You can submit an
-      interpretation at any time, but examining all six records
-      gives you the fullest picture.
-    </p>
+  <!-- SECTION 3: INTERACTIVE EVIDENCE BOARD -->
+
+  <section class="panel" id="panel-board">
+
+    <div class="panel-head">
+      <div>
+        <div class="eyebrow">YOUR THEORY</div>
+        <h2>Evidence board</h2>
+
+        <p>
+          Tap two evidence cards to select them,
+          then label their relationship.
+
+          Move cards with the arrow controls;
+          connections are yours to create.
+        </p>
+      </div>
+    </div>
+
+    <div class="board-toolbar">
+
+      <label>
+        Relationship
+        <select id="relation">
+          <option value="supports">Supports</option>
+          <option value="contradicts">Contradicts</option>
+          <option value="contextualizes">Adds context</option>
+        </select>
+      </label>
+
+      <button id="connect" class="button" disabled>
+        Connect selected evidence
+      </button>
+
+      <button id="clear-selection" class="quiet">
+        Clear selection
+      </button>
+
+    </div>
+
+    <div id="board" class="board">
+      <svg id="board-lines" aria-hidden="true"></svg>
+      <div id="board-cards" class="board-cards"></div>
+    </div>
+
+    <h3>Your connections</h3>
+    <div id="connection-list" class="stack"></div>
+
+  </section>
+
+  <!-- SECTION 4: TIMELINE RECONSTRUCTION -->
+
+  <section class="panel" id="panel-timeline">
+
+    <div class="panel-head">
+      <div>
+        <div class="eyebrow">CHRONOLOGY</div>
+        <h2>Reconstruct the timeline</h2>
+
+        <p>
+          Move events into earliest-to-latest order.
+          The timeline is touch-friendly:
+          use the up/down buttons.
+        </p>
+      </div>
+    </div>
+
+    <div id="timeline-items" class="stack"></div>
+
+    <button id="check-timeline" class="button">
+      Check chronology
+    </button>
+
+    <div
+      id="timeline-feedback"
+      class="feedback"
+      aria-live="polite"
+    ></div>
+
+  </section>
+
+  <!-- SECTION 5: WITNESS INTERVIEWS -->
+
+  <section class="panel" id="panel-interviews">
+
+    <div class="panel-head">
+      <div>
+        <div class="eyebrow">TESTIMONY</div>
+        <h2>Witness interviews</h2>
+
+        <p>
+          Ask questions, then revisit witnesses
+          after you collect evidence to unlock
+          follow-up questions.
+        </p>
+      </div>
+    </div>
+
+    <div class="interview-grid">
+
+      <div id="witnesses" class="stack"></div>
+
+      <div id="interview-room" class="paper">
+        <p>Select a witness to begin.</p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- SECTION 6: DEDUCTIONS -->
+
+  <section class="panel" id="panel-deductions">
+
+    <div class="panel-head">
+      <div>
+        <div class="eyebrow">REASONING</div>
+        <h2>Test your deductions</h2>
+
+        <p>
+          Use the records to distinguish what
+          is established from what remains uncertain.
+        </p>
+      </div>
+    </div>
+
+    <div id="deduction-list" class="stack"></div>
+
+  </section>
+
+  <!-- SECTION 7: FINAL CASE REPORT -->
+
+  <section class="panel" id="panel-report">
+
+    <div class="panel-head">
+      <div>
+        <div class="eyebrow">CASE RESOLUTION</div>
+        <h2>File your report</h2>
+
+        <p>
+          Choose a theory and cite at least two
+          records or collected clues.
+
+          Your ending reflects the strength
+          of your investigation.
+        </p>
+      </div>
+    </div>
 
     <fieldset>
-      <legend>Which explanation is best supported?</legend>
+      <legend>What best explains the closure?</legend>
+
       <label>
         <input type="radio" name="theory" value="funding">
-        The library closed solely because its budget ran out.
+        Financial pressure alone
       </label>
+
       <label>
-        <input type="radio" name="theory" value="redevelopment">
-        The closure was tied to a redevelopment proposal
-        as well as funding decisions.
+        <input type="radio" name="theory" value="mixed">
+        Budget pressures alongside redevelopment planning
       </label>
+
       <label>
-        <input type="radio" name="theory" value="staff">
-        The library closed because its staff resigned.
+        <input type="radio" name="theory" value="deal">
+        A confirmed secret property sale
       </label>
     </fieldset>
 
-    <label class="write-label" for="reason">
-      Explain your reasoning using at least two documents
-    </label>
-    <textarea id="reason" rows="5"
-      placeholder="I think… Document __ suggests… However, Document __ shows…"></textarea>
+    <label class="full-label">
+      Your explanation
 
-    <div class="action-row">
-      <button class="primary" id="submit">Review my findings</button>
-      <button class="subtle" id="download">
-        Save my case notes (.txt)
+      <textarea
+        id="report-text"
+        rows="7"
+        placeholder="Document D02 shows... This is supported by D06, although..."
+      ></textarea>
+    </label>
+
+    <div class="actions">
+      <button id="submit-report" class="button">
+        Submit case report
+      </button>
+
+      <button id="export" class="quiet">
+        Export investigator notes
       </button>
     </div>
-    <div id="feedback" class="feedback"
-      aria-live="polite" hidden></div>
+
+    <div
+      id="ending"
+      class="ending"
+      aria-live="polite"
+    ></div>
+
   </section>
 
-  <footer>
-    <p>
-      THE ARCHIVE OF TWO ACCOUNTS ·
-      An original fictional educational mystery.
-      All people, places, and records are invented.
-    </p>
-    <p>
-      Built with HTML, CSS, and JavaScript.
-      No accounts, tracking, or server required.
-    </p>
-  </footer>
 </main>
 
-<dialog id="viewer">
-  <div class="dialog-head">
-    <span id="doc-meta"></span>
-    <button id="close" aria-label="Close document">✕</button>
-  </div>
-  <div class="paper">
-    <p class="eyebrow" id="doc-type"></p>
-    <h2 id="doc-title"></h2>
-    <p class="byline" id="doc-byline"></p>
-    <div id="doc-body"></div>
-    <div class="document-note">
-      <b>Investigator's prompt</b>
-      <p id="doc-question"></p>
-    </div>
-  </div>
-  <div class="dialog-foot">
-    <button id="mark" class="primary">
-      Mark examined & close
+<!-- FOOTER -->
+
+<footer>
+  FICTIONAL ARCHIVE · All records and witnesses are invented.
+  Your investigation is saved only in this browser.
+</footer>
+
+<!-- DOCUMENT READER -->
+
+<dialog id="reader">
+
+  <div class="reader-head">
+    <span id="reader-id"></span>
+
+    <button id="close-reader" aria-label="Close record">
+      ✕
     </button>
   </div>
+
+  <div class="reader-content">
+
+    <div class="eyebrow" id="reader-type"></div>
+
+    <h2 id="reader-title"></h2>
+
+    <div class="source-meta" id="reader-meta"></div>
+
+    <p class="instruction">
+      Tap a highlighted paragraph to collect it as evidence.
+    </p>
+
+    <div id="reader-body"></div>
+
+  </div>
+
+  <div class="reader-foot">
+    <button id="finish-reading" class="button">
+      Mark examined and close
+    </button>
+  </div>
+
 </dialog>
 
-<script src="script.js" defer></script>
 </body>
 </html>
