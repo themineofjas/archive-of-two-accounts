@@ -1,1 +1,153 @@
 
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#152334">
+  <title>The Archive of Two Accounts</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <span class="seal">A</span>
+    <div>
+      <strong>THE ARCHIVE</strong>
+      <small>CASE FILE 001 · FICTIONAL</small>
+    </div>
+  </div>
+  <button id="reset" class="subtle">Restart investigation</button>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="eyebrow">INTERACTIVE INVESTIGATION · 10–15 MINUTES</p>
+    <h1>The Archive of<br><em>Two Accounts</em></h1>
+    <p>
+      Twenty years ago, the Briar Glen Public Library closed.
+      The newspaper blamed a budget shortfall. Former staff
+      members remember a different story. Examine six surviving
+      records, trace their connections, and decide what the
+      evidence supports.
+    </p>
+    <div class="hero-actions">
+      <a href="#archive" class="primary">Open the evidence archive ↓</a>
+      <span id="progress">0 of 6 records examined</span>
+    </div>
+  </section>
+
+  <section id="archive" class="workspace">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">THE COLLECTION</p>
+        <h2>Evidence archive</h2>
+        <p>
+          Choose records in any order. Click
+          <b>Examine record</b> to open the full document.
+        </p>
+      </div>
+      <label class="search-wrap">
+        Search archive
+        <input id="search" type="search"
+          placeholder="Search titles, names, text…">
+      </label>
+    </div>
+    <div id="cards" class="cards"></div>
+  </section>
+
+  <section class="workspace connections">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">DETECTIVE'S NOTEBOOK</p>
+        <h2>Connect the evidence</h2>
+        <p>
+          Open two related records, then review how they connect.
+          The links below unlock as you read.
+        </p>
+      </div>
+    </div>
+    <div id="links" class="links"></div>
+  </section>
+
+  <section class="workspace conclusion">
+    <p class="eyebrow">YOUR FINDINGS</p>
+    <h2>Write your conclusion</h2>
+    <p>
+      What best explains the closure? You can submit an
+      interpretation at any time, but examining all six records
+      gives you the fullest picture.
+    </p>
+
+    <fieldset>
+      <legend>Which explanation is best supported?</legend>
+      <label>
+        <input type="radio" name="theory" value="funding">
+        The library closed solely because its budget ran out.
+      </label>
+      <label>
+        <input type="radio" name="theory" value="redevelopment">
+        The closure was tied to a redevelopment proposal
+        as well as funding decisions.
+      </label>
+      <label>
+        <input type="radio" name="theory" value="staff">
+        The library closed because its staff resigned.
+      </label>
+    </fieldset>
+
+    <label class="write-label" for="reason">
+      Explain your reasoning using at least two documents
+    </label>
+    <textarea id="reason" rows="5"
+      placeholder="I think… Document __ suggests… However, Document __ shows…"></textarea>
+
+    <div class="action-row">
+      <button class="primary" id="submit">Review my findings</button>
+      <button class="subtle" id="download">
+        Save my case notes (.txt)
+      </button>
+    </div>
+    <div id="feedback" class="feedback"
+      aria-live="polite" hidden></div>
+  </section>
+
+  <footer>
+    <p>
+      THE ARCHIVE OF TWO ACCOUNTS ·
+      An original fictional educational mystery.
+      All people, places, and records are invented.
+    </p>
+    <p>
+      Built with HTML, CSS, and JavaScript.
+      No accounts, tracking, or server required.
+    </p>
+  </footer>
+</main>
+
+<dialog id="viewer">
+  <div class="dialog-head">
+    <span id="doc-meta"></span>
+    <button id="close" aria-label="Close document">✕</button>
+  </div>
+  <div class="paper">
+    <p class="eyebrow" id="doc-type"></p>
+    <h2 id="doc-title"></h2>
+    <p class="byline" id="doc-byline"></p>
+    <div id="doc-body"></div>
+    <div class="document-note">
+      <b>Investigator's prompt</b>
+      <p id="doc-question"></p>
+    </div>
+  </div>
+  <div class="dialog-foot">
+    <button id="mark" class="primary">
+      Mark examined & close
+    </button>
+  </div>
+</dialog>
+
+<script src="script.js" defer></script>
+</body>
+</html>
